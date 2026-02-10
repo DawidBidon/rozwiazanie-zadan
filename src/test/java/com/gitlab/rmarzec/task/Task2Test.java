@@ -70,7 +70,6 @@ public class Task2Test {
                     }
                 }
             }
-
         } catch (TimeoutException e) {
             throw new AssertionError("The list of languages is not visible", e);
         }
