@@ -14,12 +14,12 @@ import java.util.List;
 
 public class Task3Test extends BaseTest {
 
-    public String SELECT_OPTION = "//input[@aria-label='%s']";
-    public String SELECT_TASK_FROM_SIDEBAR = "//*[contains(@class, 'sidebar')]//*[contains(text(), '%s')]";
-    public By TRY_YOURSELF_BUTTON = By.xpath("//a[contains(text(), 'Try it Yourself')]");
-    public String HEADER_RESULT = "//h1[contains(text(), 'The select element')]/parent::body";
-    public String CARS_LIST = "//select[@id='cars']";
-    public String OPEL_BRAND = "//select[@id='cars']/option[text()='Opel']";
+    private static final String SELECT_OPTION = "//input[@aria-label='%s']";
+    private static final String SELECT_TASK_FROM_SIDEBAR = "//*[contains(@class, 'sidebar')]//*[contains(text(), '%s')]";
+    private static final By TRY_YOURSELF_BUTTON = By.xpath("//a[contains(text(), 'Try it Yourself')]");
+    private static final String HEADER_RESULT = "//h1[contains(text(), 'The select element')]/parent::body";
+    private static final String CARS_LIST = "//select[@id='cars']";
+    private static final String OPEL_BRAND = "//select[@id='cars']/option[text()='Opel']";
 
 
     @Test

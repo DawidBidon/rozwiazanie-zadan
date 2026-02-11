@@ -16,9 +16,9 @@ import java.util.Set;
 
 public class Task2Test extends BaseTest {
 
-    public By SELECT_LANGUAGE_BUTTON = By.id("p-lang-btn-checkbox");
-    public By LANGUAGE_SELECTION_WINDOW = By.xpath("//div[contains(@class, 'row uls-language-list uls-lcd')]");
-    public By ALL_LANGUAGES_FROM_THE_LIST = By.cssSelector("a[lang]");
+    private static final By SELECT_LANGUAGE_BUTTON = By.id("p-lang-btn-checkbox");
+    private static final By LANGUAGE_SELECTION_WINDOW = By.xpath("//div[contains(@class, 'row uls-language-list uls-lcd')]");
+    private static final By ALL_LANGUAGES_FROM_THE_LIST = By.cssSelector("a[lang]");
 
     private Set<String> uniqueNames;
     private String url;
