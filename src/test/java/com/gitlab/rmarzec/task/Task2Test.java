@@ -1,6 +1,8 @@
 package com.gitlab.rmarzec.task;
 
+import com.gitlab.rmarzec.framework.utils.BaseTest;
 import com.gitlab.rmarzec.framework.utils.DriverFactory;
+import com.gitlab.rmarzec.framework.utils.HomePage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
@@ -14,21 +16,18 @@ import java.time.Duration;
 import java.util.List;
 import java.util.Set;
 
-public class Task2Test {
+public class Task2Test extends BaseTest {
 
     public By selectLanguageButton = By.id("p-lang-btn-checkbox");
     public By languageSelectionWindow = By.xpath("//div[contains(@class, 'row uls-language-list uls-lcd')]");
     public By allLanguagesFromTheList = By.cssSelector("a[lang]");
 
-    private WebDriver webDriver;
     private Set<String> uniqueNames;
     private String url;
 
     @Test
     public void Task2Test() {
-        DriverFactory driverFactory = new DriverFactory();
-        webDriver = driverFactory.initDriver();
-        webDriver.get("https://pl.wikipedia.org/wiki/Wiki");
+        new HomePage(webDriver).goToTheWebsite("https://pl.wikipedia.org/wiki/Wiki");
 
         listTheNamesOfTheLanguagesAndTheUrlForEnglish();
         checkIfTheNumberOfLanguagesAndTheUrlForEnglishIsCorrect();
