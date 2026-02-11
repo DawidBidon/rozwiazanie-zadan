@@ -1,11 +1,9 @@
 package com.gitlab.rmarzec.task;
 
 import com.gitlab.rmarzec.framework.utils.BaseTest;
-import com.gitlab.rmarzec.framework.utils.DriverFactory;
 import com.gitlab.rmarzec.framework.utils.HomePage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -18,9 +16,9 @@ import java.util.Set;
 
 public class Task2Test extends BaseTest {
 
-    public By selectLanguageButton = By.id("p-lang-btn-checkbox");
-    public By languageSelectionWindow = By.xpath("//div[contains(@class, 'row uls-language-list uls-lcd')]");
-    public By allLanguagesFromTheList = By.cssSelector("a[lang]");
+    public By SELECT_LANGUAGE_BUTTON = By.id("p-lang-btn-checkbox");
+    public By LANGUAGE_SELECTION_WINDOW = By.xpath("//div[contains(@class, 'row uls-language-list uls-lcd')]");
+    public By ALL_LANGUAGES_FROM_THE_LIST = By.cssSelector("a[lang]");
 
     private Set<String> uniqueNames;
     private String url;
@@ -34,14 +32,14 @@ public class Task2Test extends BaseTest {
     }
 
     public void listTheNamesOfTheLanguagesAndTheUrlForEnglish() {
-        webDriver.findElement(selectLanguageButton).click();
+        webDriver.findElement(SELECT_LANGUAGE_BUTTON).click();
 
         WebDriverWait wait = new WebDriverWait(webDriver, Duration.ofSeconds(5));
         try {
-            WebElement listContainer = wait.until(ExpectedConditions.visibilityOfElementLocated(languageSelectionWindow));
+            WebElement listContainer = wait.until(ExpectedConditions.visibilityOfElementLocated(LANGUAGE_SELECTION_WINDOW));
             System.out.println("The list of languages is visible");
 
-            List<WebElement> allLanguages = listContainer.findElements(allLanguagesFromTheList);
+            List<WebElement> allLanguages = listContainer.findElements(ALL_LANGUAGES_FROM_THE_LIST);
             System.out.println("All found languages: " + allLanguages.size());
 
             uniqueNames = new java.util.LinkedHashSet<>();

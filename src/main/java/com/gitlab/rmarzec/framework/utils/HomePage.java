@@ -4,7 +4,10 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.time.Duration;
 import java.util.List;
 
 public class HomePage {
@@ -24,6 +27,14 @@ public class HomePage {
 
     public void cookieAcceptance(String buttonName) {
         String xpath = String.format(cookieAcceptanceButton, buttonName);
+
+        WebDriverWait wait = new WebDriverWait(webDriver, Duration.ofSeconds(10));
+
+        try {
+            wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath(xpath)));
+        } catch (Exception e) {
+            System.out.println("The button is not visible. Starting to search iframe.");
+        }
 
         try {
             webDriver.switchTo().defaultContent();

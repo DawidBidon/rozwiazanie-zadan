@@ -14,12 +14,12 @@ import java.util.List;
 
 public class Task3Test extends BaseTest {
 
-    public String selectOption = "//input[@aria-label='%s']";
-    public String selectTaskFromSidebar = "//*[contains(@class, 'sidebar')]//*[contains(text(), '%s')]";
-    public By tryYourselfButton = By.xpath("//a[contains(text(), 'Try it Yourself')]");
-    public String resultHeader = "//h1[contains(text(), 'The select element')]/parent::body";
-    public String carsList = "//select[@id='cars']";
-    public String opelBrand = "//select[@id='cars']/option[text()='Opel']";
+    public String SELECT_OPTION = "//input[@aria-label='%s']";
+    public String SELECT_TASK_FROM_SIDEBAR = "//*[contains(@class, 'sidebar')]//*[contains(text(), '%s')]";
+    public By TRY_YOURSELF_BUTTON = By.xpath("//a[contains(text(), 'Try it Yourself')]");
+    public String HEADER_RESULT = "//h1[contains(text(), 'The select element')]/parent::body";
+    public String CARS_LIST = "//select[@id='cars']";
+    public String OPEL_BRAND = "//select[@id='cars']/option[text()='Opel']";
 
 
     @Test
@@ -48,7 +48,7 @@ public class Task3Test extends BaseTest {
 
     public void selectOption(String buttonName) {
         WebDriverWait wait = new WebDriverWait(webDriver, Duration.ofSeconds(5));
-        By buttonXpath = By.xpath(String.format(selectOption, buttonName));
+        By buttonXpath = By.xpath(String.format(SELECT_OPTION, buttonName));
 
         try {
             WebElement button = wait.until(ExpectedConditions.elementToBeClickable(buttonXpath));
@@ -72,14 +72,13 @@ public class Task3Test extends BaseTest {
     }
 
     public void runTheSelectedTask() {
-//        selectValueFromTheSidebar("<!-->");
+        selectValueFromTheSidebar("<select>");
         clickTryItYourselfButton();
-
     }
 
     public void selectValueFromTheSidebar(String taskName) {
         WebDriverWait wait = new WebDriverWait(webDriver, Duration.ofSeconds(10));
-        By task = By.xpath(String.format(selectTaskFromSidebar, taskName));
+        By task = By.xpath(String.format(SELECT_TASK_FROM_SIDEBAR, taskName));
 
         try {
             WebElement option = wait.until(ExpectedConditions.visibilityOfElementLocated(task));
@@ -92,7 +91,7 @@ public class Task3Test extends BaseTest {
 
         public void clickTryItYourselfButton(){
             WebDriverWait wait = new WebDriverWait(webDriver, Duration.ofSeconds(5));
-            WebElement button = wait.until(ExpectedConditions.presenceOfElementLocated(tryYourselfButton));
+            WebElement button = wait.until(ExpectedConditions.presenceOfElementLocated(TRY_YOURSELF_BUTTON));
 
             try {
                 wait.until(ExpectedConditions.elementToBeClickable(button)).click();
@@ -110,7 +109,7 @@ public class Task3Test extends BaseTest {
                 webDriver.switchTo().window(tabs.get(tabs.size() - 1));
                 wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(By.id("iframeResult")));
 
-                WebElement windowContent = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(resultHeader)));
+                WebElement windowContent = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(HEADER_RESULT)));
                 String text = windowContent.getAttribute("innerText");
 
                 System.out.println("Result 'The select element' is visible below: ");
@@ -128,17 +127,16 @@ public class Task3Test extends BaseTest {
                 webDriver.switchTo().defaultContent();
                 wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(By.id("iframeResult")));
 
-                WebElement selectElement = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(carsList)));
+                WebElement selectElement = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(CARS_LIST)));
                 Select dropdown = new Select(selectElement);
                 dropdown.selectByVisibleText("Opel");
                 System.out.println("The Opel brand has been selected");
 
-                WebElement selectBrand = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(opelBrand)));
+                WebElement selectBrand = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(OPEL_BRAND)));
                 String fullTag = selectBrand.getAttribute("outerHTML");
                 System.out.println("Value of the Opel: ");
                 System.out.println("-------------------------");
                 System.out.println(fullTag);  // Dopsać do metody możliwość wyboru uzyskania wartości różnych marek, nie koniecznie Opla.
-
             } catch (Exception e) {
                 throw new AssertionError("It is not possible to select Opel brand");
             }
