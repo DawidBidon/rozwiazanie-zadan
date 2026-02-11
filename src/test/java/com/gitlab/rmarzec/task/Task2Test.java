@@ -32,43 +32,50 @@ public class Task2Test extends BaseTest {
     }
 
     public void listTheNamesOfTheLanguagesAndTheUrlForEnglish() {
-        webDriver.findElement(SELECT_LANGUAGE_BUTTON).click();
-
         WebDriverWait wait = new WebDriverWait(webDriver, Duration.ofSeconds(5));
-        try {
-            WebElement listContainer = wait.until(ExpectedConditions.visibilityOfElementLocated(LANGUAGE_SELECTION_WINDOW));
-            System.out.println("The list of languages is visible");
+        boolean isOpened = false;
+        int attempts = 0;
 
-            List<WebElement> allLanguages = listContainer.findElements(ALL_LANGUAGES_FROM_THE_LIST);
-            System.out.println("All found languages: " + allLanguages.size());
+        while (attempts < 3 && !isOpened) {
+            try {
+                webDriver.findElement(SELECT_LANGUAGE_BUTTON).click();
+                wait.until(ExpectedConditions.visibilityOfElementLocated(LANGUAGE_SELECTION_WINDOW));
+                isOpened = true;
+                System.out.println("The list of languages is visible (Attempt: " + (attempts + 1) + ")");
+            } catch (Exception e) {
+                attempts++;
+                System.out.println("Attempt " + attempts + " failed. Clicking again...");
+            }
+        }
+        if (!isOpened) {
+            throw new AssertionError("The list of languages did not appear after 3 attempts.");
+        }
 
-            uniqueNames = new java.util.LinkedHashSet<>();
-            for (WebElement language : allLanguages) {
-                String name = language.getText().trim();
-                if (!name.isEmpty()) {
-                    uniqueNames.add(name);
+        WebElement listContainer = webDriver.findElement(LANGUAGE_SELECTION_WINDOW);
+        List<WebElement> allLanguages = listContainer.findElements(ALL_LANGUAGES_FROM_THE_LIST);
+        System.out.println("All found languages: " + allLanguages.size());
+
+        uniqueNames = new java.util.LinkedHashSet<>();
+        for (WebElement language : allLanguages) {
+            String name = language.getText().trim();
+            if (!name.isEmpty()) {
+                uniqueNames.add(name);
+            }
+        }
+        System.out.println("Final unique languages count: " + uniqueNames.size());
+        System.out.println("-------------------------");
+
+        Set<String> printedNames = new java.util.HashSet<>();
+        for (WebElement language : allLanguages) {
+            String name = language.getText().trim();
+            if (!name.isEmpty() && !printedNames.contains(name)) {
+                System.out.println("Język: " + name);
+                printedNames.add(name);
+                if (name.equalsIgnoreCase("English")) {
+                    url = language.getAttribute("href");
+                    System.out.println("   --> URL address for English: " + url);
                 }
             }
-
-            System.out.println("Final unique languages count: " + uniqueNames.size());
-            System.out.println("-------------------------");
-
-            Set<String> printedNames = new java.util.HashSet<>();
-            for (WebElement language : allLanguages) {
-                String name = language.getText().trim();
-
-                if (!name.isEmpty() && !printedNames.contains(name)) {
-                    System.out.println("Język: " + name);
-                    printedNames.add(name);
-
-                    if (name.equalsIgnoreCase("English")) {
-                        url = language.getAttribute("href");
-                        System.out.println("   --> URL address for English: " + url);
-                    }
-                }
-            }
-        } catch (TimeoutException e) {
-            throw new AssertionError("The list of languages is not visible", e);
         }
     }
 
