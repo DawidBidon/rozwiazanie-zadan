@@ -1,4 +1,4 @@
-package com.gitlab.rmarzec.model;
+package com.gitlab.rmarzec.framework.utils;
 
 public class YTTile {
     String title;

@@ -70,5 +70,4 @@ public class HomePage {
         throw new AssertionError("The '" + buttonName + "' button was not found on the homepage or in any of " + iframes.size() + " frames.");
     }
 
-
 }
